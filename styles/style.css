@@ -1,0 +1,35 @@
+.calculator {
+    padding: 30px;
+    border: 1px solid #000;
+}
+
+.button {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 30px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    background: #eee;
+    color: #000;
+    font-weight: bold;
+}
+
+.textOut input{
+    height: 30px;
+    line-height: 30px;
+    font: 20px arial;
+    margin: 5px;
+    padding-right: 5px;
+    width: 93%;
+    border: 1px solid #ccc;
+    text-align: right;
+}
+
+p {
+    margin: 0 5px 0 5px;
+    text-align: right;
+    height: 18px;
+}
