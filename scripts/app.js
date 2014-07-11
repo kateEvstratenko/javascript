@@ -1,20 +1,32 @@
-﻿var textBox = document.forms['textOut'];
-var stateString = document.getElementById('stateString');
+﻿(function () {
+    'use strict';
 
-var calculator = document.querySelector('.calculator');
+    var textBox = document.getElementById('result');
+    var stateString = document.getElementById('stateString');
+    var calculator = document.getElementById('calculator');
 
-var calc = new Calculator();
+    var calc = new Calculator();
 
-calculator.addEventListener('click', function (e) {
-    if (e.target.dataset) {
-        if (e.target.dataset.buttonType === 'number') {
-            textBox.result.value = calc.addNumber(e.target.dataset.buttonValue, textBox.result.value);
-        } else if (e.target.dataset.buttonType === 'baseOperation') {
-            resultMas = calc.baseOperation(e.target.dataset.buttonValue, textBox.result.value, stateString.innerText);
-            textBox.result.value = resultMas[0];
-            stateString.innerText = resultMas[1];
-            console.log(typeof (stateString.innerText));
-        } else if (e.target.dataset.buttonType === 'additionalOperation')
-            textBox.result.value = calc.additionalOperation(e.target.dataset.buttonValue, textBox.result.value);
-    }
-}, false);
+    calculator.addEventListener('click', function (e) {
+        if (e.target.dataset) {
+            var buttonValue = e.target.dataset.buttonValue;
+            var buttonType = e.target.dataset.buttonType;
+  
+            switch (buttonType) {
+                case 'number':
+                    textBox.value = calc.addNumber(buttonValue, textBox.value);
+                    break;
+                case 'baseOperation':
+                    var resultMas = calc.baseOperation(buttonValue, textBox.value, stateString.innerText);
+                    textBox.value = resultMas[0];
+                    if (stateString) {
+                        stateString.innerText = resultMas[1];
+                    }
+                    break;
+                case 'additionalOperation':
+                    textBox.value = calc.additionalOperation(buttonValue, textBox.value);
+                    break;
+            }
+        }
+    }, false);
+})();

@@ -5,33 +5,78 @@
     <link rel="stylesheet" href="styles/calcStyles.css">
 </head>
 <body>
-    <table class="calculator">
+    <table class="calculator" id="calculator">
         <tr>
             <td colspan="5">
                 <p id="stateString"></p>
-                <form name="textOut" class="textOut">
-                    <input name="result" type="text" value="" readonly="readonly" />
+                <form class="textOut">
+                    <input  id="result" type="text" value="" readonly="readonly" />
                 </form>
             </td>
         </tr>
         <tr>
             <td>
-                <a href="javascript: void(0);" class="button" data-button-type="additionalOperation" data-button-value="backspace">
+                <a href="javascript: void(0);" class="button"
+                    data-button-type="additionalOperation" data-button-value="backspace">
                     <-
                 </a>
-
             </td>
-            <td><a href="javascript: void(0);" class="button" data-button-type="additionalOperation" data-button-value="clearNumber">CE</a></td>
-            <td><a href="javascript: void(0);" class="button" data-button-type="additionalOperation" data-button-value="clearAll">C</a></td>
-            <td><a href="javascript: void(0);" class="button" data-button-type="additionalOperation" data-button-value="negative">+ -</a></td>
-            <td><a href="javascript: void(0);" class="button" data-button-type="additionalOperation" data-button-value="sqrt">sqrt</a></td>
+            <td>
+                <a href="javascript: void(0);" class="button" 
+                    data-button-type="additionalOperation" data-button-value="clearNumber">
+                    CE
+                </a>
+            </td>
+            <td>
+                <a href="javascript: void(0);" class="button" 
+                    data-button-type="additionalOperation" data-button-value="clearAll">
+                    C
+                </a>
+            </td>
+            <td>
+                <a href="javascript: void(0);" class="button" 
+                    data-button-type="additionalOperation" data-button-value="negative">
+                    + -
+                </a>
+            </td>
+            <td>
+                <a href="javascript: void(0);" class="button" 
+                    data-button-type="additionalOperation" data-button-value="sqrt">
+                    sqrt
+                </a>
+            </td>
         </tr>
         <tr>
-            <td><a href="javascript: void(0);" class="button" data-button-type="number" data-button-value="7">7</a></td>
-            <td><a href="javascript: void(0);" class="button" data-button-type="number" data-button-value="8">8</a></td>
-            <td><a href="javascript: void(0);" class="button" data-button-type="number" data-button-value="9">9</a></td>
-            <td><a href="javascript: void(0);" class="button" data-button-type="baseOperation" data-button-value="/">/ </a></td>
-            <td><a href="javascript: void(0);" class="button" data-button-type="additionalOperation" data-button-value="percent">% </a></td>
+            <td>
+                <a href="javascript: void(0);" class="button" 
+                    data-button-type="number" data-button-value="7">
+                    7
+                </a>
+             </td>
+            <td>
+                <a href="javascript: void(0);" class="button" 
+                    data-button-type="number" data-button-value="8">
+                    8
+                </a>
+            </td>
+            <td>
+                <a href="javascript: void(0);" class="button" 
+                    data-button-type="number" data-button-value="9">
+                    9
+                </a>
+            </td>
+            <td>
+                <a href="javascript: void(0);" class="button"
+                    data-button-type="baseOperation" data-button-value="/">
+                    / 
+                </a>
+            </td>
+            <td>
+                <a href="javascript: void(0);" class="button"
+                    data-button-type="additionalOperation" data-button-value="percent">
+                    %
+                </a>
+            </td>
         </tr>
         <tr>
             <td><a href="javascript: void(0);" class="button" data-button-type="number" data-button-value="4">4</a></td>

@@ -1,7 +1,12 @@
 function Calculator() {
+    'use strict';
+
     var oldOperation = '';
     var currentRes = 0;
     var isNewNumber = true;
+
+    var EMPTY_VALUE_STRING = '0';
+
     
     function _addNumber(number, textBox) {
         var resultNumber = number;
@@ -12,86 +17,75 @@ function Calculator() {
         else {
             isNewNumber = false;
         }
+
         return resultNumber;
     }
 
+    var operations = {
+        '+': function (currentRes, number) { return currentRes + number; },
+        '-': function (currentRes, number) { return currentRes - number; },
+        '*': function (currentRes, number) { return currentRes * number; },
+        '/': function (currentRes, number) { return currentRes / number; },
+        '^': function (currentRes, number) { return Math.pow(currentRes, number); },
+    };
+
     function _baseOperation(operation, textBox, stateString) {
         stateString = stateString + ' ' + textBox + ' ' + operation;
-        if (oldOperation !== '') {
-            switch (oldOperation) {
-                case '+':
-                    currentRes += Number(textBox);
-                    break;
-                case '-':
-                    currentRes -= Number(textBox);
-                    break;
-                case '*':
-                    currentRes *= Number(textBox);
-                    break;
-                case '/':
-                    currentRes /= Number(textBox);
-                    break;
-                case '^':
-                    currentRes = Math.pow(currentRes, Number(textBox));
-                    break;
-                case '=':
-                    break;
-            }
+        var value = Number(textBox);
+        
+        if (oldOperation) {
+            currentRes = operations[oldOperation](currentRes, value);
             textBox = currentRes;
         }
         else {
-            currentRes = Number(textBox);
+            currentRes = value;
         }
-        if (operation !== '=')
+
+        if (operation !== '=') {
             oldOperation = operation;
-        else {
-            oldOperation = '';
-            stateString = '';
         }
+        else {
+            oldOperation = null;
+            stateString = null;
+        }
+
         isNewNumber = true;
 
-        console.log(textBox);
         return [textBox, stateString];
     }
 
-    function _additionalOperation(operation, textBox) {
-        switch (operation) {
-            case 'toFloat':
-                if (!isNewNumber) {
-                    if (textBox.indexOf('.', 0) === -1)
-                        textBox += '.';
-                }
-                else {
-                    textBox = '0.';
-                    isNewNumber = false;
-                }
-                break;
-            case 'backspace':
-                textBox = textBox.slice(0, -1);
-                break;
-            case 'clearAll':
-                textBox = '0';
-                currentRes = 0;
-                break;
-            case 'clearNumber':
-                textBox = '0';
-                break;
-            case 'negative':
-                textBox = -Number(textBox);
-                break;
-            case 'sqrt':
-                textBox = Math.sqrt(textBox);
-                isNewNumber = true;
-                break;
-            case 'percent':
-                textBox = currentRes * textBox / 100;
-                break;
-            case 'inverse':
-                textBox = 1 / textBox;
-                isNewNumber = true;
-                break;
+    var mathFunctions = {
+        'sqrt': function (number) {
+            isNewNumber = true;
+            return Math.sqrt(number);
+        },
+        'backspace': function (number) { return number.slice(0, -1); },
+        'clearAll': function (number) {
+            currentRes = 0;
+            return '0';
+        },
+        'clearNumber': function (number) { return '0'; },
+        'negative': function (number) { return -number; },
+        'percent': function (number) { return currentRes * number / 100; },
+        'inverse': function (number) {
+            isNewNumber = true;
+            return 1 / number;
+        },
+        'toFloat': function (number) {
+            if (!isNewNumber && number.indexOf('.') < 0) {
+                number += '.';
+            }
+            else {
+                number = '0.';
+                isNewNumber = false;
+            }
+            return number;
         }
-        return textBox;
+    };
+
+    function _additionalOperation(currentOperation, textBox) {
+
+        return mathFunctions[currentOperation](Number(textBox));
     }
 
     return {
