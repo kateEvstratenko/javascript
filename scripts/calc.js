@@ -59,7 +59,10 @@ function Calculator() {
             isNewNumber = true;
             return Math.sqrt(number);
         },
-        'backspace': function (number) { return number.slice(0, -1); },
+        'backspace': function (number) {
+            var res = number.slice(0, -1);
+            return res ? res : '0';
+        },
         'clearAll': function (number) {
             currentRes = 0;
             return '0';
@@ -85,7 +88,7 @@ function Calculator() {
 
     function _additionalOperation(currentOperation, textBox) {
 
-        return mathFunctions[currentOperation](Number(textBox));
+        return (mathFunctions[currentOperation](textBox));
     }
 
     return {
