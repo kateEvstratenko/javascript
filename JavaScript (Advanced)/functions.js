@@ -1,4 +1,5 @@
 ﻿function FunctionsLibrary() {
+    'use strict';
 
     function partial(func) {
         var args = Array.prototype.slice.call(arguments, 1);
@@ -38,7 +39,9 @@
     }
 
     function fold(arr, callback, initialValue) {
-        var preValue, index;
+        var preValue;
+        var index;
+
         if (initialValue) {
             preValue = initialValue;
             index = 0;
@@ -81,6 +84,7 @@
 
     function filter(array, callback) {
         var resMas = [];
+
         for (var i = 0; i < array.length; i++) {
             var elem = array[i];
             if (callback(elem)) {

@@ -1,4 +1,6 @@
 ﻿(function () {
+    'use strict';
+
     var functionsCollect = new FunctionsLibrary();
 
     var f = functionsCollect.partial(sum,  2);
