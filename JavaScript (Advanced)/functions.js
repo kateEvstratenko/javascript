@@ -1,14 +1,14 @@
-﻿function functionsLibrary() {
+﻿function FunctionsLibrary() {
 
-    function _partial(func) {
+    function partial(func) {
         var args = Array.prototype.slice.apply(arguments).slice(1);
 
-        return function () {
+        return function() {
             return func.apply(this, Array.prototype.concat.apply(args, arguments));
-        }
-    }
+        };
+    };
 
-    function _curry() {
+    function curry() {
         var fun;
         var n;
         var args;
@@ -24,21 +24,20 @@
             args = Array.prototype.slice.apply(arguments).slice(2);
         }
 
-        return function () {
+        return function() {
             var newArgs = Array.prototype.slice.apply(arguments);
             var allCurrentArgs = Array.prototype.concat.apply(args, newArgs);
             var otherParamsCount = n - newArgs.length;
 
             if (otherParamsCount) {
-                return _curry.apply(this, Array.prototype.concat(otherParamsCount, fun, allCurrentArgs));
-            }
-            else {
+                return curry.apply(this, Array.prototype.concat(otherParamsCount, fun, allCurrentArgs));
+            } else {
                 return fun.apply(this, allCurrentArgs);
             }
-        }
+        };
     }
 
-    function _fold(arr, callback, initialValue) {
+    function fold(arr, callback, initialValue) {
         var preValue, index;
         if (initialValue) {
             preValue = initialValue;
@@ -56,7 +55,7 @@
         return preValue;
     }
 
-    function _unfold(callback, initialValue) {
+    function unfold(callback, initialValue) {
         var state = initialValue;
         var newValue = null;
         var array = [];
@@ -73,14 +72,14 @@
         return array;
     }
 
-    function _map(array, callback) {
+    function map(array, callback) {
         for (var i = 0; i < array.length; i++) {
             array[i] = callback(array[i]);
         }
         return array;
     }
 
-    function _filter(array, callback) {
+    function filter(array, callback) {
         var resMas = [];
         for (var i = 0; i < array.length; i++) {
             var elem = array[i];
@@ -91,65 +90,42 @@
         return resMas;
     }
 
-    function _firstElement(array, callback) {
-        return _filter(array, callback)[0];
+    function firstElement(array, callback) {
+        return filter(array, callback)[0];
     }
 
-    function _lazy() {       
-        var args;
-        var func;
-        
+    function lazy(func) {
+        var args = null;
+        var result = null;
+
         if (typeof arguments[0] === 'function') {
-            console.log('sfsdf');
-            func = arguments[0];
             args = Array.prototype.slice.apply(arguments).slice(1);
-        } else {
-            args = Array.prototype.slice.apply(arguments);
         }
 
         return function () {
-            console.log('gj');
-            var a = arguments[0];
-            if (typeof a === 'function') {
-
-                return _lazy.apply(this, args);
-                //  } else {
-                //       return func.apply(this, args);
-                //   }
+            if (typeof arguments[0] === 'function') {
+                return lazy.apply(this, args);
             } else {
-                console.log('else');
-                return func.apply(this, args);
+                if (!result) {
+                    result = func.apply(this, args);
+                }
+                return result;
             }
         };
     }
-    
 
-    //function calc(a, b, c) {
-    //    console.log(a);
-    //    return a + b + c;
-    //}
-
-    //function lazy(f, args) { }
-
-    //var lazyCalc = lazy(calc, 1, 2, 3);
-
-    //lazyCalc();
-    //var lazyCalc = lazy(_memoisation, _lazy);
-
-    function _memoisation(func) {
+    function memoisation(func) {
         var cache = [];
 
-        return function() {
-            var res;
+        return function () {
+            var res = null;
             var arg = arguments[0];
             if (typeof arg !== 'function') {
                 if (arg in cache) {
                     res = cache[arg];
-                    //console.log('from cache');
                 } else {
                     res = func.call(this, arg);
                     cache[arg] = res;
-                    //console.log('not from cache');
                 }
             }
 
@@ -158,14 +134,14 @@
     }
 
     return {
-        partial: _partial,
-        curry: _curry,
-        fold: _fold,
-        unfold: _unfold,
-        map: _map,
-        filter: _filter,
-        firstElement: _firstElement,
-        lazy: _lazy,
-        memoisation: _memoisation
+        partial: partial,
+        curry: curry,
+        fold: fold,
+        unfold: unfold,
+        map: map,
+        filter: filter,
+        firstElement: firstElement,
+        lazy: lazy,
+        memoisation: memoisation
     };
 };

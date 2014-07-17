@@ -1,13 +1,13 @@
 ﻿(function () {
-    var functionsCollect = new functionsLibrary();
+    var functionsCollect = new FunctionsLibrary();
 
     var f = functionsCollect.partial(sum,  2);
-    var res = f(5, 6, 7);
-    console.log('partial: ' + res);
+    var partialRes = f(5, 6, 7);
+    console.log('partial: ' + partialRes);
 
     var cur = functionsCollect.curry(mul);
-    var res = cur(2)(3)(4);
-    console.log('curry: ' + res);
+    var curryRes = cur(2)(3)(4);
+    console.log('curry: ' + curryRes);
 
     var foldArray = [1, 2, 3, 5];
     var foldRes = functionsCollect.fold(foldArray, sumElements, 0);
@@ -41,22 +41,16 @@
     console.log('first of even: ' + functionsCollect.firstElement(arrayForFirstMethod, isEven));
 
     var lazyRes = functionsCollect.lazy(sum, 4,5,6);
-    console.log('lazy: ' + lazyRes);
-    //console.log(lazyRes());
-    //lazyRes = functionsCollect.lazy(sum, [2, 8]);
-    //console.log(lazyRes());
-
-    var sqr = functionsCollect.memoisation(sqr);
-    console.log('memoization: ' + sqr(5));
-    //console.log(sqr(5));
-    //console.log(sqr(6));
-
-
+    console.log('lazy: ' + lazyRes());
+    
+    var sqrRes = functionsCollect.memoisation(sqr);
+    console.log('memoization: ' + sqrRes(5));
+    
     /*functions*/
 
     /*for filter*/
     function isEven(value) {
-        return (value % 2 === 0)
+        return (value % 2 === 0);
     }
 
     /*for map*/
@@ -78,19 +72,14 @@
     }
     
     function mul(x, y, z) {
-        var m = 1;
-        for (var i = 0; i < arguments.length; i++) {
-            m = m * Number(arguments[i]);
-        }
-        return m;
+        return x * y * z;
     }
 
-    function sum(sss) {
+    function sum() {
         var s = 0;
-        for (var i = 0; i < arguments.length; i++) {
+        for (i = 0; i < arguments.length; i++) {
             s += Number(arguments[i]);
         }
-        console.log(s);
         return s;
     }
 }());
