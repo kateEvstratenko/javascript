@@ -7,11 +7,10 @@ function Calculator() {
 
     var EMPTY_VALUE_STRING = '0';
 
-    
-    function _addNumber(number, textBox) {
+    function addNumber(number, textBox) {
         var resultNumber = number;
 
-        if (!isNewNumber && textBox != '0') {
+        if (!isNewNumber && textBox != EMPTY_VALUE_STRING) {
             resultNumber = textBox + number;
         }
         else {
@@ -22,19 +21,19 @@ function Calculator() {
     }
 
     var operations = {
-        '+': function (currentRes, number) { return currentRes + number; },
-        '-': function (currentRes, number) { return currentRes - number; },
-        '*': function (currentRes, number) { return currentRes * number; },
-        '/': function (currentRes, number) { return currentRes / number; },
-        '^': function (currentRes, number) { return Math.pow(currentRes, number); },
+        '+': function (number) { return currentRes + number; },
+        '-': function (number) { return currentRes - number; },
+        '*': function (number) { return currentRes * number; },
+        '/': function (number) { return currentRes / number; },
+        '^': function (number) { return Math.pow(currentRes, number); },
     };
 
-    function _baseOperation(operation, textBox, stateString) {
+    function baseOperation(operation, textBox, stateString) {
         stateString = stateString + ' ' + textBox + ' ' + operation;
         var value = Number(textBox);
         
         if (oldOperation) {
-            currentRes = operations[oldOperation](currentRes, value);
+            currentRes = operations[oldOperation](value);
             textBox = currentRes;
         }
         else {
@@ -61,13 +60,13 @@ function Calculator() {
         },
         'backspace': function (number) {
             var res = number.slice(0, -1);
-            return res ? res : '0';
+            return res ? res : EMPTY_VALUE_STRING;
         },
-        'clearAll': function (number) {
+        'clearAll': function () {
             currentRes = 0;
-            return '0';
+            return EMPTY_VALUE_STRING;
         },
-        'clearNumber': function (number) { return '0'; },
+        'clearNumber': function () { return EMPTY_VALUE_STRING; },
         'negative': function (number) { return -number; },
         'percent': function (number) { return currentRes * number / 100; },
         'inverse': function (number) {
@@ -79,22 +78,21 @@ function Calculator() {
                 number += '.';
             }
             else {
-                number = '0.';
+                number = EMPTY_VALUE_STRING + '.';
                 isNewNumber = false;
             }
             return number;
         }
     };
 
-    function _additionalOperation(currentOperation, textBox) {
-
+    function additionalOperation(currentOperation, textBox) {
         return (mathFunctions[currentOperation](textBox));
     }
 
     return {
-        addNumber: _addNumber,
-        baseOperation: _baseOperation,      
-        additionalOperation: _additionalOperation,
+        addNumber: addNumber,
+        baseOperation: baseOperation,      
+        additionalOperation: additionalOperation,
     };
 };
 

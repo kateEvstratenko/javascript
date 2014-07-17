@@ -1,7 +1,7 @@
 ﻿function FunctionsLibrary() {
 
     function partial(func) {
-        var args = Array.prototype.slice.apply(arguments).slice(1);
+        var args = Array.prototype.slice.call(arguments, 1);
 
         return function() {
             return func.apply(this, Array.prototype.concat.apply(args, arguments));
@@ -95,22 +95,14 @@
     }
 
     function lazy(func) {
-        var args = null;
         var result = null;
-
-        if (typeof arguments[0] === 'function') {
-            args = Array.prototype.slice.apply(arguments).slice(1);
-        }
+        var args = Array.prototype.slice.call(arguments, 1);
 
         return function () {
-            if (typeof arguments[0] === 'function') {
-                return lazy.apply(this, args);
-            } else {
-                if (!result) {
-                    result = func.apply(this, args);
-                }
-                return result;
+            if (!result) {
+                result = func.apply(this, args);
             }
+            return result;
         };
     }
 
